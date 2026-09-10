@@ -14,7 +14,11 @@ import json
 import shutil
 import argparse
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
+# Ensure UTF-8 output on Windows consoles
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # Tool translation map: Source agent tools -> Antigravity native tools
 TOOL_MAPPINGS = {

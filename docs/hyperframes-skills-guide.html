@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HyperFrames Video Creation Handbook — Google Antigravity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.55);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --accent-glow: rgba(249, 115, 22, 0.25);
+      --accent-gradient: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%);
+      --code-bg: #030712;
+      --code-border: #1e293b;
+      --table-th-bg: rgba(249, 115, 22, 0.08);
+      --table-border: rgba(255, 255, 255, 0.06);
+      --table-hover: rgba(249, 115, 22, 0.04);
+      --badge-bg: rgba(249, 115, 22, 0.12);
+      --badge-border: rgba(249, 115, 22, 0.3);
+      --tag-bg: rgba(255, 255, 255, 0.06);
+      --success: #34d399;
+      --info: #38bdf8;
+      --purple: #c084fc;
+    }
+
+    html.light {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --accent-glow: rgba(249, 115, 22, 0.15);
+      --code-bg: #f1f5f9;
+      --code-border: #cbd5e1;
+      --table-th-bg: rgba(249, 115, 22, 0.06);
+      --table-border: rgba(0, 0, 0, 0.06);
+      --table-hover: rgba(249, 115, 22, 0.03);
+      --badge-bg: rgba(249, 115, 22, 0.1);
+      --badge-border: rgba(249, 115, 22, 0.25);
+      --tag-bg: rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      border-top: 10px solid #f97316;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      width: 100%;
+      flex: 1 0 auto;
+    }
+
+    /* Top Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0 28px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f97316;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      color: #f97316;
+      font-size: 1.2rem;
+    }
+
+    .nav-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .badge-pill.active {
+      background: var(--badge-bg);
+      border-color: var(--badge-border);
+      color: var(--accent);
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .hero-pretitle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 860px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      backdrop-filter: blur(12px);
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Filter & Search Bar */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 16px 20px;
+      border-radius: 14px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      padding: 10px 14px 10px 38px;
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .cat-btn.active {
+      background: #f97316;
+      border-color: #f97316;
+      color: #ffffff;
+    }
+
+    /* Architecture Visual */
+    .architecture-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(16px);
+    }
+
+    .architecture-card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .flow-step {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+    }
+
+    .flow-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(249, 115, 22, 0.15);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .flow-step h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .flow-step p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .flow-step .skill-tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 2px 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(249, 115, 22, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+    }
+
+    .skill-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .skill-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skill-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .skill-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .skill-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      color: var(--accent);
+      border: 1px solid var(--card-border);
+    }
+
+    .advantage-box {
+      background: rgba(249, 115, 22, 0.06);
+      border-left: 4px solid #f97316;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 20px;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .advantage-box strong {
+      color: var(--accent);
+    }
+
+    .skill-sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 18px;
+    }
+
+    .section-block {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .section-block h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prompt-box {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 10px 42px 10px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.83rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .copy-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 7px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .feature-list li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+    }
+
+    .spec-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .spec-label {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .spec-val {
+      color: var(--text);
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Matrix Table */
+    .table-container {
+      overflow-x: auto;
+      margin: 28px 0;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--table-th-bg);
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--accent);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--table-hover);
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      margin-top: auto;
+      padding: 40px 20px;
+      background-color: #000000;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      box-sizing: border-box;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Navigation Bar -->
+    <div class="nav-bar">
+      <div class="logo-area">
+        <div class="logo-icon">AG</div>
+        <span class="brand-title">Antigravity HyperFrames Studio</span>
+      </div>
+      <div class="nav-badges">
+        <span class="badge-pill active">10 New Skills Installed</span>
+        <span class="badge-pill">HyperFrames 2.0</span>
+        <span class="badge-pill">Zero Dependencies</span>
+        <span class="badge-pill">100% Code-Driven</span>
+        <a href="https://github.com/shaashiekumha/antigravity-skill-converter" class="badge-pill" target="_blank" rel="noopener noreferrer">
+          GitHub Repository
+        </a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light and dark mode">
+          <span id="theme-text">Light Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-pretitle">HYPERFRAMES OPERATIONAL PLAYBOOK</div>
+      <h1>HyperFrames Video Creation Handbook</h1>
+      <p class="hero-lead">
+        A comprehensive operational manual for the <strong>10 newly installed video creation skills</strong> in Google Antigravity. Explore detailed functional blueprints, clear strategic advantages over traditional timeline-based video editing, and ready-to-copy chat prompts.
+      </p>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-num">10</div>
+          <div class="stat-label">Specialized Skills Added</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0 GPU</div>
+          <div class="stat-label">CPU-Optimized DOM Render</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Frame-Accurate & Deterministic</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">35+</div>
+          <div class="stat-label">Built-in Preset VFX Styles</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Pipeline Visual -->
+    <div class="architecture-card">
+      <h2>
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+        Unified Video Production Workflow
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px;">
+        How the newly installed skills connect seamlessly with your existing Antigravity core engine to transform ideas into broadcast-ready videos:
+      </p>
+
+      <div class="pipeline-flow">
+        <div class="flow-step">
+          <div class="flow-step-num">01</div>
+          <h3>Concept & Scripting</h3>
+          <p>The agent drafts storyboard scenes, pacing beats, and audio narration from raw inputs.</p>
+          <span class="skill-tag">general-video</span>
+          <span class="skill-tag">product-launch-video</span>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">02</div>
+          <h3>Visual Design & Motion</h3>
+          <p>Generates programmatic HTML/CSS layouts, GSAP motion paths, or living paint-on canvas strokes.</p>
+          <span class="skill-tag">p5-paint-animation</span>
+          <span class="skill-tag">vox-explainer</span>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">03</div>
+          <h3>Post-Production & Polish</h3>
+          <p>Automates talking-head camera cuts, inserts b-roll callouts, and embeds animated karaoke subtitles.</p>
+          <span class="skill-tag">talking-head-recut</span>
+          <span class="skill-tag">embedded-captions</span>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">04</div>
+          <h3>Deterministic Bake</h3>
+          <p>Renders seekable MP4 or transparent WebM video files locally with exact frame timestamps.</p>
+          <span class="skill-tag">hyperframes-cli</span>
+          <span class="skill-tag">ffmpeg</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-bar">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="skill-search" class="search-input" placeholder="Search skills, use-cases, or prompt triggers..." oninput="filterSkills()">
+      </div>
+      <div class="category-pills">
+        <button class="cat-btn active" onclick="setCategory('all', this)">All (10)</button>
+        <button class="cat-btn" onclick="setCategory('marketing', this)">Marketing & Promo</button>
+        <button class="cat-btn" onclick="setCategory('explainer', this)">Explainers & Docs</button>
+        <button class="cat-btn" onclick="setCategory('social', this)">Social & Captions</button>
+        <button class="cat-btn" onclick="setCategory('postprod', this)">Post-Production</button>
+        <button class="cat-btn" onclick="setCategory('presentation', this)">Presentation & Dev</button>
+      </div>
+    </div>
+
+    <!-- 10 Skills Detailed Breakdown -->
+    <div class="skills-grid" id="skills-container">
+
+      <!-- 1. product-launch-video -->
+      <div class="skill-card" data-category="marketing" data-tags="product launch saas promo demo commercial reveal teaser">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div>
+              <div class="skill-name">product-launch-video</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/product-launch-video</div>
+            </div>
+          </div>
+          <span class="skill-category">Marketing & Promo</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Traditional SaaS promo videos take days of manual After Effects composition, keyframing UI mockups, and adjusting timing. <code>product-launch-video</code> automates the entire formula—hook, problem visualization, UI feature breakdown, social proof, and high-impact call-to-action—rendering a commercial-grade announcement video from a simple product URL or brief.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create a 30s product launch video for our app with feature highlights and a CTA
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, generate a SaaS reveal promo from this product landing page URL
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, build a commercial teaser for v2.0 highlighting speed improvements and new UI
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Structured 6-beat marketing formula (Hook &rarr; Problem &rarr; Solution &rarr; Features &rarr; Proof &rarr; CTA).</li>
+              <li>High-converting kinetic typography and simulated browser/mobile frames.</li>
+              <li>Beat-matched audio bed integration with ducked voiceover narration.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Ideal Duration</div>
+                <div class="spec-val">15s – 60s</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Output Aspect</div>
+                <div class="spec-val">16:9 / 9:16</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. general-video -->
+      <div class="skill-card" data-category="marketing presentation" data-tags="general video multi-scene composition storyboard montage reel">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+            </div>
+            <div>
+              <div class="skill-name">general-video</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/general-video</div>
+            </div>
+          </div>
+          <span class="skill-category">General Production</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> The ultimate architectural multi-scene engine. When your video doesn't fit into a rigid niche template (e.g. brand sizzle reels, multi-chapter presentations, product tours, or custom visual narratives), <code>general-video</code> orchestrates the entire scene timeline, coordinates sub-compositions, binds shared variables, and enforces strict seekable deterministic rendering.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create a 4-scene video explaining how our platform works with voiceover
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, make a brand montage video with upbeat BGM and typography cards
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, compose a 60-second video from my STORYBOARD.md plan
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Full multi-scene orchestration using <code>data-start</code> and <code>data-duration</code> attributes.</li>
+              <li>Multi-track audio mixing with automated ducking and fade-in/fade-out envelopes.</li>
+              <li>Parameterized video rendering: update video copy and numbers via JSON without re-authoring.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Ideal Duration</div>
+                <div class="spec-val">30s – 180s</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Architecture</div>
+                <div class="spec-val">Multi-Scene DOM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. embedded-captions -->
+      <div class="skill-card" data-category="social postprod" data-tags="embedded captions subtitles karaoke tiktok shorts reels hormozi vfx text">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+            </div>
+            <div>
+              <div class="skill-name">embedded-captions</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/embedded-captions</div>
+            </div>
+          </div>
+          <span class="skill-category">Social & Subtitles</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Modern viral short-form video demands dynamic, word-by-word animated subtitles. <code>embedded-captions</code> provides 35+ preset identities (Hormozi, MrBeast, cinematic punch-in, glow-trail). It runs locally end-to-end, supports subject matting to place animated text <em>behind</em> the speaker, and requires zero paid third-party transcription APIs.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, add Hormozi-style animated captions to "C:\videos\clip.mp4"
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, embed word-by-word karaoke subtitles behind the speaker in my video
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, apply style-12 cinematic pop captions to my 9:16 vertical reel
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>35 distinct visual identity presets ranging from subtle anchor text to high-energy pop.</li>
+              <li>Local Whisper transcription integration for millisecond-accurate word boundaries.</li>
+              <li>Foreground subject depth layer: text renders behind the speaker with no manual rotoscoping.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Style Catalog</div>
+                <div class="spec-val">35 Named Presets</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Timing Accuracy</div>
+                <div class="spec-val">Word-Level (~50ms)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. vox-explainer -->
+      <div class="skill-card" data-category="explainer" data-tags="vox explainer documentary collage paper texture johnny harris journalistic history map">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+            <div>
+              <div class="skill-name">vox-explainer</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/vox-explainer</div>
+            </div>
+          </div>
+          <span class="skill-category">Documentary & News</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Recreates the iconic Vox / Johnny Harris visual journalism style: vintage paper textures, animated yellow highlighter marks over newspaper articles, camera push-ins onto archival photography, and animated map journeys. It turns research briefs, PDFs, or articles into captivating 60–90 second visual investigations.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, make a Vox-style explainer video on "Why the semiconductor supply chain is so fragile"
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, turn this historical document into a 90-second animated paper-collage video
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create an investigative explainer with newspaper clipping zooms and highlight animations
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Procedural paper collage, tape overlays, and stop-motion style camera judder.</li>
+              <li>Automated document highlighting with handwriting/marker write-on animations.</li>
+              <li>Pacing grid optimized for rapid-fire visual revelations with subtle paper SFX.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Pacing</div>
+                <div class="spec-val">Fast (60–90s)</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Visual Style</div>
+                <div class="spec-val">Paper Collage / News</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. faceless-explainer -->
+      <div class="skill-card" data-category="explainer" data-tags="faceless explainer youtube automated narration topic notes article educational">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div>
+              <div class="skill-name">faceless-explainer</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/faceless-explainer</div>
+            </div>
+          </div>
+          <span class="skill-category">Automated YouTube</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> The premier skill for automated YouTube educational, financial, or tech explainers without filming live footage. <code>faceless-explainer</code> takes notes or an article, auto-generates visual abstractions (data charts, diagrams, kinetic text emphasis, and geometric iconography), and times everything seamlessly to synthesized voiceover.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, make a faceless explainer video breaking down "How Git rebase works internally"
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, convert my research notes on "Quantum Computing" into a 2-minute faceless video
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, produce an educational explainer video with charts and voiceover for this article
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Zero filming required: visual concepts invented per scene using code graphics and data-viz.</li>
+              <li>Automatic scene breakdown with visual hierarchy and rhythm control.</li>
+              <li>Built-in TTS voiceover sync with auto-generated subtitle overlays.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Best Format</div>
+                <div class="spec-val">YouTube 16:9 / Shorts</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Visual Engine</div>
+                <div class="spec-val">SVG / CSS / D3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. talking-head-recut -->
+      <div class="skill-card" data-category="postprod" data-tags="talking head recut podcast interview webcam post-production b-roll lower thirds zoom cuts">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            </div>
+            <div>
+              <div class="skill-name">talking-head-recut</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/talking-head-recut</div>
+            </div>
+          </div>
+          <span class="skill-category">Post-Production</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Raw talking-head or webcam video can feel static and boring. <code>talking-head-recut</code> automatically dresses up existing footage: it adds timed lower-thirds, animated quote callouts, stat side-panels, picture-in-picture frames, and subtle digital punch-in zooms on key statements—turning raw clips into broadcast television quality.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, recut my talking head clip at "C:\videos\interview.mp4" with graphic overlays
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, dress up this podcast clip with lower-thirds, punch-in zooms, and quote cards
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, package my webcam tutorial into a 9:16 vertical video with side callouts
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Transcript-synced graphic trigger cards (lower-thirds, stat boxes, key takeaways).</li>
+              <li>Camera punch-in and framing automation to eliminate awkward pauses and emphasize points.</li>
+              <li>Works on 16:9 widescreen or reframes into 9:16 portrait for Instagram/TikTok.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Input</div>
+                <div class="spec-val">Raw MP4 / WebM</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Enhancement</div>
+                <div class="spec-val">Broadcast Overlays</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. pr-to-video -->
+      <div class="skill-card" data-category="presentation" data-tags="pr to video github pull request changelog release diff code git developer">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+            </div>
+            <div>
+              <div class="skill-name">pr-to-video</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/pr-to-video</div>
+            </div>
+          </div>
+          <span class="skill-category">Developer Changelog</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Changelogs and git diffs are notoriously dry and ignored by users. <code>pr-to-video</code> reads a GitHub Pull Request or local git commit range, extracts the key changes, and builds an animated code-walkthrough video with syntax-highlighted diffs, file tree transitions, and narrator explanations—perfect for Twitter and release announcements.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, turn my latest GitHub PR into an animated code-change video for Twitter
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, generate a 45-second release changelog video from git commits HEAD~5..HEAD
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, explain the diff between main and feature-branch in a visual walkthrough video
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Direct git diff parsing: automatically creates animated before/after code blocks.</li>
+              <li>Visual file tree highlighting modified components and architecture changes.</li>
+              <li>Natural narration explaining the motivation, architectural trade-offs, and user benefit.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Input Source</div>
+                <div class="spec-val">Git PR / Repo Diff</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Target Audience</div>
+                <div class="spec-val">Developers & Users</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. slideshow -->
+      <div class="skill-card" data-category="presentation" data-tags="slideshow interactive presentation deck pitch fragments presenter notes">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div>
+              <div class="skill-name">slideshow</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/slideshow</div>
+            </div>
+          </div>
+          <span class="skill-category">Decks & Slides</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> Traditional slide tools (PowerPoint/Keynote) produce static slides with clumsy animation. <code>slideshow</code> creates web-native, responsive HTML slide decks with hardware-accelerated transitions, stepwise fragment reveals, interactive hotspot navigation, built-in presenter mode with speaker notes, and instant export to video.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create an animated pitch deck for our AI product with speaker notes
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, convert this Markdown outline into an interactive 8-slide HyperFrames presentation
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, build a slideshow with fragment reveals and presenter hotkeys
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Dual-mode output: navigate live in browser (keyboard controls) or render to MP4 video.</li>
+              <li>Stepwise fragment reveals (bullet points, diagrams, and callout reveals on cue).</li>
+              <li>Built-in presenter console with timer, upcoming slide preview, and speaker notes.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Navigation</div>
+                <div class="spec-val">Keyboard / Auto</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Format</div>
+                <div class="spec-val">Live Web / MP4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. p5-paint-animation -->
+      <div class="skill-card" data-category="postprod" data-tags="p5 paint animation artistic handwriting sketch watercolor canvas living painting">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+            </div>
+            <div>
+              <div class="skill-name">p5-paint-animation</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/p5-paint-animation</div>
+            </div>
+          </div>
+          <span class="skill-category">Artistic Generative VFX</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> AI video generators often fail at precise, artistic hand-drawing because diffusion models produce flickering artifacts. <code>p5-paint-animation</code> is 100% procedural code: it simulates real acrylic paint, watercolor washes, and pencil handwriting that draws itself onto the screen frame-by-frame with zero external video generation models or GPUs.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create a handwritten text animation that writes "Antigravity 2.0" in pencil strokes
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, turn this photo into a painting that paints itself onto canvas over 5 seconds
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, generate an artistic watercolor reveal animation for our title logo
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Procedural brush engine (p5.brush): authentic textures, bristle splatters, and pressure.</li>
+              <li>Pencil & calligraphy handwriting effect that traces vector paths frame-by-frame.</li>
+              <li>Zero GPU requirement: renders cleanly and deterministically on CPU via Headless Chrome.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Engine</div>
+                <div class="spec-val">p5.js + Canvas</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Compute</div>
+                <div class="spec-val">100% CPU-Friendly</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. x-posting-license -->
+      <div class="skill-card" data-category="social" data-tags="x posting license twitter card viral meme 3d tilt 10s social">
+        <div class="skill-card-header">
+          <div class="skill-title-area">
+            <div class="skill-icon-badge">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><line x1="15" y1="8" x2="17" y2="8"></line><line x1="15" y1="12" x2="17" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+            </div>
+            <div>
+              <div class="skill-name">x-posting-license</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">~/.agents/skills/x-posting-license</div>
+            </div>
+          </div>
+          <span class="skill-category">Viral Social Meme</span>
+        </div>
+
+        <div class="advantage-box">
+          <strong>The Strategic Advantage:</strong> An instant, high-engagement viral format: generates a 10.3-second 3D animated "Official Posting License" for any Twitter/X user. The card slides in over an animated dot-matrix field, types out credentials, counts up stats, tilts in 3D with a metallic specular gleam, flips to show a holographic back, and vaults off-screen.
+        </div>
+
+        <div class="skill-sections-grid">
+          <div class="section-block">
+            <h4>Ready-to-Use Prompts</h4>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, make an X posting license video for @shaashiekumha
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, generate a 3D posting license card video for this profile bio and stats
+            </div>
+            <div class="prompt-box">
+              <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+              agy, create a personalized Twitter driver's license animation with holographic flip
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h4>Key Capabilities & Specs</h4>
+            <ul class="feature-list">
+              <li>Turnkey template: just provide username, follower count, and avatar image.</li>
+              <li>3D CSS perspective transforms with dynamic holographic shimmer.</li>
+              <li>Exact 10.3-second viral runtime engineered for high social retention.</li>
+            </ul>
+            <div class="specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Runtime</div>
+                <div class="spec-val">10.3 Seconds</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">3D Engine</div>
+                <div class="spec-val">CSS 3D / GSAP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Master Comparison Matrix -->
+    <h2 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--text);">
+      Cross-Skill Functional Matrix
+    </h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+      Quickly select the ideal skill for your specific production requirements:
+    </p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Skill Name</th>
+            <th>Primary Objective</th>
+            <th>Inputs Needed</th>
+            <th>Typical Length</th>
+            <th>Special Secret Weapon</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: var(--accent);">product-launch-video</strong></td>
+            <td>SaaS & product announcements</td>
+            <td>URL, brief, or feature list</td>
+            <td>30s – 60s</td>
+            <td>Proven 6-beat marketing conversion structure</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">general-video</strong></td>
+            <td>Custom multi-scene productions</td>
+            <td>Topic or STORYBOARD.md</td>
+            <td>30s – 3 mins</td>
+            <td>Deterministic multi-track scene choreography</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">embedded-captions</strong></td>
+            <td>Dynamic viral karaoke subtitles</td>
+            <td>Raw MP4 video file</td>
+            <td>Any duration</td>
+            <td>35 preset styles + text behind subject matting</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">vox-explainer</strong></td>
+            <td>Journalistic collage documentaries</td>
+            <td>Article, document, or topic</td>
+            <td>60s – 90s</td>
+            <td>Paper collage, highlighter, and archival zooms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">faceless-explainer</strong></td>
+            <td>YouTube educational/tech videos</td>
+            <td>Notes, topic, or script</td>
+            <td>1 – 5 mins</td>
+            <td>Zero-footage automatic code diagrams & data-viz</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">talking-head-recut</strong></td>
+            <td>Polishing presenter/podcast video</td>
+            <td>Raw presenter video clip</td>
+            <td>Any duration</td>
+            <td>Automated broadcast overlays & digital punch-ins</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">pr-to-video</strong></td>
+            <td>Software release notes & diffs</td>
+            <td>Git PR, commits, or diff</td>
+            <td>30s – 60s</td>
+            <td>Syntax-highlighted animated before/after diffs</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">slideshow</strong></td>
+            <td>Interactive presentations & decks</td>
+            <td>Markdown outline / notes</td>
+            <td>Multi-slide</td>
+            <td>Dual output: live interactive web OR rendered video</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">p5-paint-animation</strong></td>
+            <td>Procedural handwriting & watercolor</td>
+            <td>Text prompt, photo, or path</td>
+            <td>3s – 15s</td>
+            <td>100% code brushstrokes with zero AI model flickering</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">x-posting-license</strong></td>
+            <td>Viral 3D profile ID card animation</td>
+            <td>Twitter handle & stats</td>
+            <td>10.3s</td>
+            <td>Holographic 3D card tilt & viral meme appeal</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1140px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; font-weight: 500;">
+        <a href="https://github.com/shaashiekumha/antigravity-skill-converter" target="_blank" rel="noopener noreferrer">
+          GitHub Repository
+        </a>
+        <span>•</span>
+        <a href="https://shaashiekumha.github.io/antigravity-skill-converter/" target="_blank" rel="noopener noreferrer">
+          Live Skill Converter Site
+        </a>
+        <span>•</span>
+        <a href="https://github.com/shaashiekumha/antigravity-skill-converter/issues" target="_blank" rel="noopener noreferrer">
+          Issues & Feedback
+        </a>
+      </div>
+      <p style="margin: 0;">HyperFrames Video Creation Handbook • Open-Source MIT License • Google Antigravity & Agentic Ecosystems</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle Functionality
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeText = document.getElementById('theme-text');
+    const htmlEl = document.documentElement;
+
+    const savedTheme = localStorage.getItem('hf_theme') || 'dark';
+    if (savedTheme === 'light') {
+      htmlEl.classList.remove('dark');
+      htmlEl.classList.add('light');
+      themeText.innerText = 'Dark Mode';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeText.innerText = 'Dark Mode';
+        localStorage.setItem('hf_theme', 'light');
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeText.innerText = 'Light Mode';
+        localStorage.setItem('hf_theme', 'dark');
+      }
+    });
+
+    // Copy Prompt Functionality
+    function copyPrompt(btn) {
+      const box = btn.parentElement;
+      const textToCopy = box.innerText.replace("Copy", "").trim();
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "Copied!";
+        btn.style.background = "#34d399";
+        btn.style.color = "#090d16";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = "";
+          btn.style.color = "";
+        }, 2000);
+      });
+    }
+
+    // Category Filter Functionality
+    let currentCategory = 'all';
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterSkills();
+    }
+
+    // Search and Category Filter combined
+    function filterSkills() {
+      const query = document.getElementById('skill-search').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.skill-card');
+
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category') || '';
+        const cardTags = card.getAttribute('data-tags') || '';
+        const cardText = card.innerText.toLowerCase();
+
+        const matchesCat = (currentCategory === 'all') || cardCat.includes(currentCategory);
+        const matchesQuery = (!query) || cardTags.includes(query) || cardText.includes(query);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
