@@ -50,10 +50,10 @@ Clone or copy this repository into your global or workspace Antigravity skills d
 
 ```bash
 # Global Antigravity skills directory (Windows)
-git clone https://github.com/mirokuapps/antigravity-skill-converter.git %USERPROFILE%\.agents\skills\skill-converter
+git clone https://github.com/shaashiekumha/antigravity-skill-converter.git %USERPROFILE%\.agents\skills\skill-converter
 
 # Global Antigravity skills directory (Linux / macOS)
-git clone https://github.com/mirokuapps/antigravity-skill-converter.git ~/.agents/skills/skill-converter
+git clone https://github.com/shaashiekumha/antigravity-skill-converter.git ~/.agents/skills/skill-converter
 ```
 
 Once placed in `.agents/skills/`, Antigravity will automatically detect `skill-converter`.
@@ -110,7 +110,7 @@ A comprehensive, stylized HTML manual is included in [`docs/skill-converter-guid
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/mirokuapps/antigravity-skill-converter/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/shaashiekumha/antigravity-skill-converter/issues).
 
 ---
 
