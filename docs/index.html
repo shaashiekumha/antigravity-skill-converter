@@ -15,9 +15,31 @@
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --code-bg: #040711;
+      --code-text: #e2e8f0;
+      --step-bg: rgba(255, 255, 255, 0.03);
+      --table-th-bg: rgba(255, 255, 255, 0.04);
+      --table-border: rgba(255, 255, 255, 0.04);
+      --table-hover: rgba(56, 189, 248, 0.04);
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(15, 23, 42, 0.1);
+      --accent: #0284c7;
+      --accent-secondary: #6366f1;
+      --accent-gradient: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #9333ea 100%);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --code-bg: #f1f5f9;
+      --code-text: #0f172a;
+      --step-bg: rgba(0, 0, 0, 0.025);
+      --table-th-bg: rgba(0, 0, 0, 0.035);
+      --table-border: rgba(0, 0, 0, 0.06);
+      --table-hover: rgba(2, 132, 199, 0.06);
     }
 
     * {
@@ -37,6 +59,13 @@
       line-height: 1.65;
       padding: 40px 20px;
       min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    [data-theme="light"] body {
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.06) 0px, transparent 50%);
     }
 
     .container {
@@ -80,6 +109,7 @@
 
     .nav-badges {
       display: flex;
+      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
@@ -94,9 +124,9 @@
       font-weight: 600;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
-      color: #cbd5e1;
+      color: var(--text-muted);
       text-decoration: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, color 0.2s;
     }
 
     .badge-pill:hover {
@@ -108,6 +138,33 @@
       background: rgba(56, 189, 248, 0.12);
       border-color: rgba(56, 189, 248, 0.3);
       color: var(--accent);
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-left: 6px;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--accent);
+      color: #090d16;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn svg {
+      flex-shrink: 0;
     }
 
     /* Hero Section */
@@ -187,7 +244,7 @@
     }
 
     .step-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--step-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 18px 20px;
@@ -212,26 +269,26 @@
       font-size: 1.05rem;
       font-weight: 700;
       margin-bottom: 6px;
-      color: #f1f5f9;
+      color: var(--text);
     }
 
     .step-card p {
       font-size: 0.85rem;
-      color: #94a3b8;
+      color: var(--text-muted);
       margin-bottom: 0;
     }
 
     /* Code Blocks */
     .code-box {
       background: var(--code-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
       border-radius: 10px;
       padding: 14px 16px;
       position: relative;
       margin: 12px 0 16px 0;
       font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
       font-size: 0.86rem;
-      color: #e2e8f0;
+      color: var(--code-text);
       overflow-x: auto;
     }
 
@@ -239,8 +296,8 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(125, 125, 125, 0.12);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       color: var(--text-muted);
       padding: 4px 10px;
@@ -271,7 +328,7 @@
     }
 
     th {
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--table-th-bg);
       padding: 14px 18px;
       font-weight: 700;
       color: var(--accent);
@@ -280,8 +337,8 @@
 
     td {
       padding: 13px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: #cbd5e1;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text);
     }
 
     tr:last-child td {
@@ -289,7 +346,7 @@
     }
 
     tr:hover td {
-      background: rgba(56, 189, 248, 0.04);
+      background: var(--table-hover);
     }
 
     .tool-src {
@@ -344,6 +401,23 @@
         <span class="badge-pill">Zero Dependencies</span>
         <span class="badge-pill">Python 3.8+</span>
         <span class="badge-pill">Cross-Platform</span>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light and dark mode" title="Toggle theme">
+          <svg id="theme-icon-dark" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="theme-icon-light" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="theme-label">Light Mode</span>
+        </button>
       </div>
     </div>
 
@@ -557,6 +631,37 @@ antigravity-skill-converter/
           btn.style.background = "";
           btn.style.color = "";
         }, 2000);
+      });
+    }
+
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const sunIcon = document.getElementById("theme-icon-dark");
+    const moonIcon = document.getElementById("theme-icon-light");
+    const themeLabel = document.getElementById("theme-label");
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("antigravity-theme", theme);
+      if (theme === "light") {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+        themeLabel.innerText = "Dark Mode";
+      } else {
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+        themeLabel.innerText = "Light Mode";
+      }
+    }
+
+    const currentTheme = localStorage.getItem("antigravity-theme") || 
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    applyTheme(currentTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const active = document.documentElement.getAttribute("data-theme") || "dark";
+        applyTheme(active === "dark" ? "light" : "dark");
       });
     }
   </script>
