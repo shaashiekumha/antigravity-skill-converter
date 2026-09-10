@@ -4,6 +4,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/)
 [![Antigravity](https://img.shields.io/badge/compatible-Google%20Antigravity-4285F4.svg)](https://antigravity.google)
+[![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-38bdf8.svg)](https://shaashiekumha.github.io/antigravity-skill-converter/)
 
 A universal conversion engine and progressive disclosure skill that converts agent skills from **Anthropic Claude Code**, **GitHub Copilot CLI**, **Amp**, **Cursor**, **Cline / Roo Code**, and generic agent formats into 100% native, production-grade **Google Antigravity** skills.
 
